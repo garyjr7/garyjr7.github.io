@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junior Reveles | BAJIOWARE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+  :root {
+    --bg:       #050a0e;
+    --bg2:      #080f14;
+    --panel:    #0b1520;
+    --border:   #0f2233;
+    --accent:   #00d4ff;
+    --accent2:  #00ff88;
+    --accent3:  #ff3d71;
+    --text:     #c8d8e8;
+    --muted:    #4a6070;
+    --glow:     0 0 20px rgba(0,212,255,0.3);
+    --glow2:    0 0 20px rgba(0,255,136,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,212,255,0.015) 2px,
+      rgba(0,212,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 60px 0 40px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin-top: 40px;
+    box-shadow: var(--glow);
+  }
+
+  .badge-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .badge.red   { border-color: var(--accent3); color: var(--accent3); }
+  .badge.green { border-color: var(--accent2); color: var(--accent2); }
+  .badge.blue  { border-color: var(--accent);  color: var(--accent);  }
+
+  .name {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(0,212,255,0.5);
+  }
+
+  .name span { color: var(--accent); }
+
+  .company {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+    letter-spacing: 6px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .tagline {
+    font-size: 17px;
+    color: var(--muted);
+    margin-top: 16px;
+    font-weight: 300;
+  }
+
+  .tagline strong { color: var(--text); }
+
+  /* ── QUOTE ── */
+  .quote-block {
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px;
+    margin: 48px 0;
+    background: rgba(0,212,255,0.04);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    position: relative;
+  }
+
+  .quote-block::before {
+    content: '// MENTALIDAD';
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 52px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s forwards;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.1s; }
+  .section:nth-child(2) { animation-delay: 0.2s; }
+  .section:nth-child(3) { animation-delay: 0.3s; }
+  .section:nth-child(4) { animation-delay: 0.4s; }
+  .section:nth-child(5) { animation-delay: 0.5s; }
+  .section:nth-child(6) { animation-delay: 0.6s; }
+  .section:nth-child(7) { animation-delay: 0.7s; }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ── PROGRESS BARS ── */
+  .progress-list { display: flex; flex-direction: column; gap: 16px; }
+
+  .progress-item {}
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+
+  .progress-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .progress-label .sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 8px;
+  }
+
+  .progress-pct {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  .bar-track {
+    height: 6px;
+    background: var(--border);
+    position: relative;
+    overflow: visible;
+  }
+
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    position: relative;
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bar-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: 0 0 10px currentColor;
+  }
+
+  .bar-fill.cyan    { background: var(--accent);  box-shadow: var(--glow); }
+  .bar-fill.green   { background: var(--accent2); box-shadow: var(--glow2); }
+  .bar-fill.orange  { background: #ff9d00; }
+  .bar-fill.red     { background: var(--accent3); }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    padding: 20px;
+    background: var(--panel);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s;
+    transform-origin: bottom;
+  }
+
+  .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .project-card:hover::before { transform: scaleY(1); }
+
+  .project-card.green-accent::before { background: var(--accent2); }
+  .project-card.red-accent::before   { background: var(--accent3); }
+  .project-card.orange-accent::before { background: #ff9d00; }
+
+  .project-card:hover.green-accent  { border-color: var(--accent2); }
+  .project-card:hover.red-accent    { border-color: var(--accent3); }
+  .project-card:hover.orange-accent { border-color: #ff9d00; }
+
+  .project-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .project-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .project-stack {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .stack-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 2px 7px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── STACK GRID ── */
+  .stack-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+
+  .stack-cat {
+    border: 1px solid var(--border);
+    padding: 16px;
+    background: var(--panel);
+  }
+
+  .stack-cat-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .stack-cat-title.cyan   { color: var(--accent); }
+  .stack-cat-title.green  { color: var(--accent2); }
+  .stack-cat-title.red    { color: var(--accent3); }
+  .stack-cat-title.orange { color: #ff9d00; }
+
+  .stack-items { display: flex; flex-direction: column; gap: 6px; }
+
+  .stack-item {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stack-item::before {
+    content: '▸';
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  /* ── OBJECTIVES ── */
+  .objectives-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .objective {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    font-size: 15px;
+  }
+
+  .obj-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .obj-text { flex: 1; }
+  .obj-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border: 1px solid;
+  }
+  .obj-status.active { border-color: var(--accent2); color: var(--accent2); }
+  .obj-status.in-progress { border-color: #ff9d00; color: #ff9d00; }
+  .obj-status.planned { border-color: var(--muted); color: var(--muted); }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .philosophy-grid { grid-template-columns: 1fr; }
+  }
+
+  .philo-card {
+    border: 1px solid var(--border);
+    padding: 20px;
+    text-align: center;
+    background: var(--panel);
+  }
+
+  .philo-primary {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .philo-vs {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--accent3);
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .philo-secondary {
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .footer a { color: var(--accent); text-decoration: none; }
+
+  .location-tag {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  /* Glitch animation on name */
+  @keyframes glitch {
+    0%, 95%, 100% { text-shadow: 0 0 40px rgba(0,212,255,0.5); }
+    96% { text-shadow: -2px 0 var(--accent3), 2px 0 var(--accent2), 0 0 40px rgba(0,212,255,0.5); }
+    97% { text-shadow: 2px 0 var(--accent3), -2px 0 var(--accent2), 0 0 40px rgba(0,212,255,0.5); }
+    98% { text-shadow: 0 0 40px rgba(0,212,255,0.5); }
+  }
+
+  .name { animation: glitch 6s infinite; }
+
+  /* Terminal cursor blink */
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 4px;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  /* Status dot */
+  .status-dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent2);
+    box-shadow: 0 0 8px var(--accent2);
+    animation: pulse 2s infinite;
+    margin-right: 6px;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header" style="animation: fadeUp 0.8s forwards; opacity:0">
+    <div class="badge-row">
+      <span class="badge red">🔴 Red Team</span>
+      <span class="badge blue">🛡️ Security Architect</span>
+      <span class="badge green">🤖 AI Systems</span>
+      <span class="badge">⚙️ Full-Stack Dev</span>
+    </div>
+    <div class="name">JUNIOR <span>REVELES</span></div>
+    <div class="company">BAJIOWARE · MARCOS IVAN HORTA REVELES</div>
+    <div class="tagline">
+      <span class="status-dot"></span>
+      <strong>Architect of secure systems.</strong> Not just a developer — a threat modeler who builds things that already survived his own attacks.
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-block">
+    "Un sistema no es seguro porque funciona…<br>
+    es seguro porque ya intentaste romperlo."<br>
+    <br>
+    "Si no puedes atacarlo, no deberías construirlo."
+  </div>
+
+  <!-- PROGRESO & CERTIFICACIONES -->
+  <div class="section">
+    <div class="section-title">// Progreso & Certificaciones</div>
+    <div class="progress-list">
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">OffSec PEN-200 (OSCP+)<span class="sub">Active Labs</span></span>
+          <span class="progress-pct" id="pct-oscp">80%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill cyan" data-target="80" id="bar-oscp"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">BAJIOWARE CRM Platform<span class="sub">Vue 3 + FastAPI + ReportLab</span></span>
+          <span class="progress-pct" id="pct-crm">75%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" data-target="75" id="bar-crm"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">MetaAgentAI — Bug Bounty Autonomous System<span class="sub">CrewAI · Kali · nexus</span></span>
+          <span class="progress-pct" id="pct-meta">60%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill orange" data-target="60" id="bar-meta"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">VOID-FRAME v2.0<span class="sub">Async Python · SQLite · Red Team Orchestration</span></span>
+          <span class="progress-pct" id="pct-void">70%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill cyan" data-target="70" id="bar-void"></div>
+        </div>
+      </div>
+
+      <div class="progress-item">
+        <div class="progress-header">
+          <span class="progress-label">Security Architect @ BanBajío<span class="sub">Target Role · Interview Stage</span></span>
+          <span class="progress-pct" id="pct-ban">85%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill green" data-target="85" id="bar-ban"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROYECTOS -->
+  <div class="section">
+    <div class="section-title">// Proyectos Clave</div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-tag">// AI · Security</div>
+        <div class="project-name">METAAGENTAI</div>
+        <div class="project-desc">Sistema multi-agente autónomo para bug bounty. Orquestación con CrewAI sobre Kali Linux. HackerOne · Bugcrowd · Intigriti — con human-in-the-loop antes de submission.</div>
+        <div class="project-stack">
+          <span class="stack-tag">CrewAI</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Kali</span>
+          <span class="stack-tag">GPT-4o</span>
+        </div>
+      </div>
+
+      <div class="project-card green-accent">
+        <div class="project-tag">// Full-Stack · CRM</div>
+        <div class="project-name">BAJIOWARE CRM</div>
+        <div class="project-desc">Plataforma CRM propia: web forms → leads → Kanban pipeline → generación de PDF (cotización, contrato, reporte). Stack moderno y 100% propio.</div>
+        <div class="project-stack">
+          <span class="stack-tag">Vue 3</span>
+          <span class="stack-tag">FastAPI</span>
+          <span class="stack-tag">ReportLab</span>
+          <span class="stack-tag">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="project-card red-accent">
+        <div class="project-tag">// Red Team · Framework</div>
+        <div class="project-name">VOID-FRAME v2.0</div>
+        <div class="project-desc">Framework async de orquestación de agentes para red team. Sin dependencias externas de AI. Persistent SQLite strategy learning, JSONL event logging, auto-rollback.</div>
+        <div class="project-stack">
+          <span class="stack-tag">Python Async</span>
+          <span class="stack-tag">SQLite</span>
+          <span class="stack-tag">Ubuntu</span>
+          <span class="stack-tag">Git</span>
+        </div>
+      </div>
+
+      <div class="project-card orange-accent">
+        <div class="project-tag">// Infra · AI</div>
+        <div class="project-name">HYDRA-OLLAMA</div>
+        <div class="project-desc">Stack de inferencia AI zero-cost: Google Colab GPU free-tier + Ollama + Cloudflare Tunnel + Flask proxy. Objetivo: dolphin-llama3 local para pentest.</div>
+        <div class="project-stack">
+          <span class="stack-tag">Ollama</span>
+          <span class="stack-tag">Cloudflare</span>
+          <span class="stack-tag">Flask</span>
+          <span class="stack-tag">Colab</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-tag">// Banking · Web</div>
+        <div class="project-name">BANKWEBMX</div>
+        <div class="project-desc">Sistema bancario web con autenticación segura, formularios multi-etapa y arquitectura modular. Diseñado con UX enterprise + controles de seguridad reales.</div>
+        <div class="project-stack">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">JWT</span>
+        </div>
+      </div>
+
+      <div class="project-card green-accent">
+        <div class="project-tag">// AI · CLI Tools</div>
+        <div class="project-name">IASPLOIT + BB-HUNTER</div>
+        <div class="project-desc">AI-powered pentesting copilot (Claude/GPT/Ollama backends) + CLI bug bounty automation con ScopeParser, ReconAgent, ScannerAgent y ReportGenerator.</div>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">OpenAI</span>
+          <span class="stack-tag">Anthropic</span>
+          <span class="stack-tag">CLI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STACK TECNOLÓGICO -->
+  <div class="section">
+    <div class="section-title">// Stack Tecnológico Real</div>
+    <div class="stack-categories">
+
+      <div class="stack-cat">
+        <div class="stack-cat-title cyan">Backend & APIs</div>
+        <div class="stack-items">
+          <span class="stack-item">FastAPI (Python)</span>
+          <span class="stack-item">Node.js + Express</span>
+          <span class="stack-item">JWT Auth</span>
+          <span class="stack-item">PostgreSQL / MySQL</span>
+          <span class="stack-item">SQLite (embedded)</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title green">Frontend</div>
+        <div class="stack-items">
+          <span class="stack-item">Vue 3 (Composition API)</span>
+          <span class="stack-item">Tailwind CSS</span>
+          <span class="stack-item">Vite</span>
+          <span class="stack-item">Pinia</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title red">Ciberseguridad</div>
+        <div class="stack-items">
+          <span class="stack-item">Kali Linux</span>
+          <span class="stack-item">Metasploit</span>
+          <span class="stack-item">Nmap / Gobuster</span>
+          <span class="stack-item">Burp Suite</span>
+          <span class="stack-item">OSCP+ (activo)</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title orange">IA & Agentes</div>
+        <div class="stack-items">
+          <span class="stack-item">CrewAI</span>
+          <span class="stack-item">LangGraph</span>
+          <span class="stack-item">Anthropic API</span>
+          <span class="stack-item">OpenAI GPT-4o</span>
+          <span class="stack-item">Ollama (local)</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title cyan">Infra & Dev</div>
+        <div class="stack-items">
+          <span class="stack-item">Ubuntu Server (nexus)</span>
+          <span class="stack-item">DigitalOcean VPS</span>
+          <span class="stack-item">Docker</span>
+          <span class="stack-item">Cloudflare Tunnel</span>
+          <span class="stack-item">Git (kill-chain workflow)</span>
+        </div>
+      </div>
+
+      <div class="stack-cat">
+        <div class="stack-cat-title green">Documentos & Reporting</div>
+        <div class="stack-items">
+          <span class="stack-item">ReportLab (PDF)</span>
+          <span class="stack-item">CNBV arts. 96–102</span>
+          <span class="stack-item">PCI-DSS 4.0</span>
+          <span class="stack-item">AWS (EKS, IAM)</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OBJETIVOS 2026 -->
+  <div class="section">
+    <div class="section-title">// Objetivos 2026</div>
+    <div class="objectives-list">
+      <div class="objective">
+        <span class="obj-icon">🎯</span>
+        <span class="obj-text">Certificación OSCP+ — OffSec PEN-200 completada y aprobada</span>
+        <span class="obj-status in-progress">EN CURSO</span>
+      </div>
+      <div class="objective">
+        <span class="obj-icon">🏦</span>
+        <span class="obj-text">Security Architect @ BanBajío — Stack: AWS · VMware NSX-T · HashiCorp Vault · CrowdStrike · Splunk</span>
+        <span class="obj-status in-progress">EN PROCESO</span>
+      </div>
+      <div class="objective">
+        <span class="obj-icon">🏗️</span>
+        <span class="obj-text">Escalar BAJIOWARE como empresa real — primer cliente enterprise contratado</span>
+        <span class="obj-status active">ACTIVO</span>
+      </div>
+      <div class="objective">
+        <span class="obj-icon">🤖</span>
+        <span class="obj-text">MetaAgentAI en producción — primer bug bounty válido reportado de forma autónoma</span>
+        <span class="obj-status in-progress">EN CURSO</span>
+      </div>
+      <div class="objective">
+        <span class="obj-icon">🔐</span>
+        <span class="obj-text">Especialización avanzada Red Team + Purple Team — labs enterprise propios</span>
+        <span class="obj-status planned">PLANEADO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILOSOFÍA -->
+  <div class="section">
+    <div class="section-title">// Filosofía de Trabajo</div>
+    <div class="philosophy-grid">
+      <div class="philo-card">
+        <div class="philo-primary">SEGURIDAD</div>
+        <div class="philo-vs">OVER</div>
+        <div class="philo-secondary">velocidad</div>
+      </div>
+      <div class="philo-card">
+        <div class="philo-primary">ARQUITECTURA</div>
+        <div class="philo-vs">OVER</div>
+        <div class="philo-secondary">improvisación</div>
+      </div>
+      <div class="philo-card">
+        <div class="philo-primary">SISTEMAS REALES</div>
+        <div class="philo-vs">OVER</div>
+        <div class="philo-secondary">proyectos de práctica</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div>
+      <span style="color: var(--accent); font-size:14px;">BAJIOWARE</span>
+      &nbsp;·&nbsp; Marcos Ivan Horta Reveles
+      &nbsp;·&nbsp; León, Guanajuato, MX
+    </div>
+    <div class="location-tag">
+      💼 LinkedIn: TU_LINK &nbsp;|&nbsp; 📧 EMAIL &nbsp;|&nbsp; 🌐 bajioware.com
+    </div>
+    <div style="margin-top:16px; font-size:11px; color: var(--muted);">
+      &lt;/&gt; Built by Junior Reveles — BAJIOWARE © 2026
+      <span class="cursor"></span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Animate progress bars on load
+  function animateBars() {
+    const bars = document.querySelectorAll('.bar-fill[data-target]');
+    bars.forEach(bar => {
+      const target = parseInt(bar.getAttribute('data-target'));
+      setTimeout(() => {
+        bar.style.width = target + '%';
+      }, 400);
+    });
+  }
+
+  // Intersection Observer for bars
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateBars();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+
+  const progressSection = document.querySelector('.progress-list');
+  if (progressSection) observer.observe(progressSection);
+
+  // Fallback: run after 300ms
+  setTimeout(animateBars, 300);
+</script>
+</body>
+</html>
